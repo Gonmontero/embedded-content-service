@@ -1,4 +1,4 @@
-# embed provider service
+# embedded Content service
 
 REST Api which serves as proxy of other service applications that support oEmbed Specification.
 
@@ -54,7 +54,7 @@ then the connection pools will get maxxed out, and bottle necks will impact in t
 
 Once Service is up and running, use Swagger UI for an easier interaction with the service:
 
-- Local ENV: http://localhost:8080/embed-provider-service/swagger-ui.html#/
+- Local ENV: http://localhost:8080/embedded-content-service/swagger-ui.html#/
 
 ## Prerequisites
 
@@ -62,5 +62,9 @@ Once Service is up and running, use Swagger UI for an easier interaction with th
 * Maven 3
 
 # Installing
+
+* TBD
+
+# Release notes
 
 * TBD

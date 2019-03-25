@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.embed.service</groupId>
-    <artifactId>embed-provider-service</artifactId>
+    <artifactId>embedded-content-service</artifactId>
     <version>1.2.0</version>
     <name>EmbedService</name>
     <build>
-        <finalName>embed-provider-service</finalName>
+        <finalName>embedded-content-service</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
@@ -136,18 +136,6 @@
         <dependency>
             <groupId>com.netflix.hystrix</groupId>
             <artifactId>hystrix-request-servlet</artifactId>
-            <version>${hystrix.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.netflix.hystrix</groupId>
-            <artifactId>hystrix-metrics-event-stream</artifactId>
-            <version>${hystrix.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.netflix.hystrix</groupId>
-            <artifactId>hystrix-javanica</artifactId>
             <version>${hystrix.version}</version>
         </dependency>
 
