@@ -4,7 +4,11 @@ public enum ErrorCode {
 
     PROVIDER_NOT_FOUND ("0001", "Provider not found", 404),
 
-    FIELD_VALIDATION_ERROR ("0002", "Field validation error", 400);
+    CONTENT_NOT_FOUND ("0002", "Content not found", 404),
+
+    UNEXPECTED_ERROR ("0003", "An Unexpected error occured", 500),
+
+    FIELD_VALIDATION_ERROR ("0004", "Field validation error", 400);
 
     private String code;
     private String description;
