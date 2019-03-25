@@ -64,7 +64,7 @@ public class ProviderServiceImpl implements ProviderService {
     private void populateProviderDetails(RegisterProviderRequestResource resource, Provider provider) {
 
         provider.setName(resource.getProviderName());
-        provider.setApiEndpoint(resource.getApiEndpoint());
+        provider.setApiEndpoint(UrlProviderUtil.formatApiEndpoint(resource.getApiEndpoint()));
 
         Set<String> urlSchemes = new HashSet<>();
         resource.getUrlSchemes().stream().forEach(u -> {
