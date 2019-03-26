@@ -3,18 +3,19 @@ package com.embed.command.resources;
 public class ProviderEmbeddedResponse {
 
     private String thumbnail_Url;
+    private String title;
     private String type;
+    private String url;
     private String version;
     private String author_name;
     private String author_url;
     private String provider_name;
     private String provider_url;
     private String cache_age;
-    private int thumbnail_width;
-    private int thumbnail_height;
-    private String photo;
-    private int width;
-    private int height;
+    private Integer thumbnail_width;
+    private Integer thumbnail_height;
+    private Integer width;
+    private Integer height;
 
     public String getHtml() {
         return html;
@@ -90,43 +91,51 @@ public class ProviderEmbeddedResponse {
         this.cache_age = cache_age;
     }
 
-    public int getThumbnail_width() {
+    public Integer getThumbnail_width() {
         return thumbnail_width;
     }
 
-    public void setThumbnail_width(int thumbnail_width) {
+    public void setThumbnail_width(Integer thumbnail_width) {
         this.thumbnail_width = thumbnail_width;
     }
 
-    public int getThumbnail_height() {
+    public Integer getThumbnail_height() {
         return thumbnail_height;
     }
 
-    public void setThumbnail_height(int thumbnail_height) {
+    public void setThumbnail_height(Integer thumbnail_height) {
         this.thumbnail_height = thumbnail_height;
     }
 
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
-
-    public int getWidth() {
+    public Integer getWidth() {
         return width;
     }
 
-    public void setWidth(int width) {
+    public void setWidth(Integer width) {
         this.width = width;
     }
 
-    public int getHeight() {
+    public Integer getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
+    public void setHeight(Integer height) {
         this.height = height;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

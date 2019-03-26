@@ -1,4 +1,4 @@
-# embedded Content service
+# Embedded content service
 
 REST Api which serves as proxy of other service applications that support oEmbed Specification.
 

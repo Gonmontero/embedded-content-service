@@ -12,14 +12,13 @@ import java.util.Set;
 public class Provider {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
-
     @Column(name = "provider_name", length = 50, unique = true)
     private String name;
 
     @Column(name = "url", length = 50)
+    private String url;
+
+    @Column(name = "api_url", length = 50)
     private String apiEndpoint;
 
     @ElementCollection
@@ -48,5 +47,13 @@ public class Provider {
 
     public void setUrlSchema(Set<String> urlSchema) {
         this.urlSchema = urlSchema;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

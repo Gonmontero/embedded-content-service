@@ -1,9 +1,9 @@
 package com.embed.service;
 
-import com.embed.command.resources.ProviderEmbeddedResponse;
+import com.embed.entities.EmbeddedContent;
 
 public interface EmbeddedService {
 
-    ProviderEmbeddedResponse getResponse(String providerName, String url);
+    EmbeddedContent getResponse(String providerName, String url);
 
 }

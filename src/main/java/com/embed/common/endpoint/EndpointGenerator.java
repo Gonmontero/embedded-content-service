@@ -1,22 +1,17 @@
 package com.embed.common.endpoint;
 
+import com.jakewharton.retrofit.Ok3Client;
 import okhttp3.OkHttpClient;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit.RestAdapter;
 
 public class EndpointGenerator {
 
-    private static OkHttpClient.Builder httpClient
-            = new OkHttpClient.Builder();
-
     public static <T> T buildConnector(Class<T> type, String baseUrl) {
 
-        Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .client(httpClient.build())
-                .addConverterFactory(GsonConverterFactory.create());
-        Retrofit retrofit = builder.build();
+        final RestAdapter.Builder builder = new RestAdapter.Builder()
+                .setEndpoint(baseUrl)
+                .setClient(new Ok3Client(new OkHttpClient()));
 
-        return retrofit.create(type);
+        return builder.build().create(type);
     }
 }
