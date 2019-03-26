@@ -1,10 +1,11 @@
 package com.embed.rest;
 
 
+import com.embed.entities.EmbeddedContent;
 import com.embed.exceptions.ApplicationException;
 import com.embed.exceptions.errors.ErrorCode;
-import com.embed.command.resources.ProviderEmbeddedResponse;
 import com.embed.rest.exception.ApplicationExceptionHandler;
+import com.embed.rest.resources.response.EmbeddedContentResponseResource;
 import com.embed.service.EmbeddedService;
 import com.github.dozermapper.core.Mapper;
 import io.swagger.annotations.Api;
@@ -33,20 +34,21 @@ public class RestEmbeddedService extends ApplicationExceptionHandler {
 
     @ApiOperation(value = "Gets embedded information from the provider")
     @RequestMapping(value = "/oembed/{providerName}", method = RequestMethod.GET)
-    public ProviderEmbeddedResponse getEmbeddedContent(@PathVariable("providerName") String id,
-                                                       @RequestParam(name = "url") String url,
-                                                       HttpServletResponse httpResponse) {
+    public EmbeddedContentResponseResource getEmbeddedContent(@PathVariable("providerName") String id,
+                                                              @RequestParam(name = "url") String url,
+                                                              HttpServletResponse httpResponse) {
 
         if(StringUtils.isEmpty(url)){
             throw new ApplicationException(ErrorCode.FIELD_VALIDATION_ERROR, "An Url needs to be provided");
         }
 
-        ProviderEmbeddedResponse response = embeddedService.getResponse(id, url);
+        EmbeddedContent response = embeddedService.getResponse(id, url);
 
         if (response != null) {
             httpResponse.setStatus(HttpServletResponse.SC_OK);
         }
-        return response;
+
+        return mapper.map(response, EmbeddedContentResponseResource.class);
     }
 
     public void setMapper(Mapper mapper) {

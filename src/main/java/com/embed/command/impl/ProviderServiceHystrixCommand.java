@@ -7,8 +7,8 @@ import com.embed.exceptions.errors.ErrorCode;
 import com.netflix.hystrix.HystrixCommand;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import retrofit2.Call;
-import retrofit2.Response;
+import retrofit.RetrofitError;
+
 
 public class ProviderServiceHystrixCommand extends HystrixCommand<ProviderEmbeddedResponse> {
 
@@ -26,20 +26,12 @@ public class ProviderServiceHystrixCommand extends HystrixCommand<ProviderEmbedd
     @Override
     protected ProviderEmbeddedResponse run() {
         try {
-            Call<ProviderEmbeddedResponse> httpRequest = providerService.getEmbeddedContent(url);
-            LOGGER.info("Requesting Embedded Content to: " + httpRequest.request().url());
-
-            Response<ProviderEmbeddedResponse> response = httpRequest.execute();
-
-            if (!response.isSuccessful()) {
-                LOGGER.error("Retrofit failed to connect when calling: " + url
-                        + ". ERROR CODE: " + response.code() +" Error Message: " + response.errorBody());
-                throw new ApplicationException(ErrorCode.PROVIDER_NOT_FOUND, "Failed to retrieve embedded content from Provider.");
-            }
-            return response.body();
-
-        }catch (Exception e) {
-            throw new ApplicationException(ErrorCode.UNEXPECTED_ERROR, "Failed to retrieve embedded content from Provider.");
+            ProviderEmbeddedResponse httpRequest = providerService.getEmbeddedContent(url);
+            return httpRequest;
+            } catch(RetrofitError e) {
+                LOGGER.error("ERROR when calling trying to reach url: " + url + "Error Message: " + e.getBody());
+                throw new ApplicationException(ErrorCode.UNEXPECTED_ERROR, "Failed to retrieve embedded content from Provider.");
         }
     }
 }
+

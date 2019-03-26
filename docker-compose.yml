@@ -1,0 +1,11 @@
+version: '2'
+services:
+     ecs:
+        build:
+          context: .
+          dockerfile: Dockerfile
+        image: embedded-content-service
+        ports:
+           - "8080:8080"
+        environment:
+           SPRING_PROFILES_ACTIVE: default

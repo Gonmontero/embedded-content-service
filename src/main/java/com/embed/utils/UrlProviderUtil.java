@@ -2,8 +2,6 @@ package com.embed.utils;
 
 import com.embed.entities.Provider;
 
-import java.util.Iterator;
-
 public class UrlProviderUtil {
 
     private static String SLASH_CHAR = "/";
@@ -27,7 +25,7 @@ public class UrlProviderUtil {
     public static String formatApiEndpoint(String apiEndpoint) {
 
         String formatted = apiEndpoint.toLowerCase();
-        formatted.replace(OEMBED_ROUTE, SLASH_CHAR);
+        formatted = formatted.replace(OEMBED_ROUTE, SLASH_CHAR);
 
         return formatted;
     }
@@ -35,11 +33,11 @@ public class UrlProviderUtil {
     public static boolean isRegisteredUrl(Provider provider, String url) {
         Boolean validated = false;
 
-        Iterator<String> schemes = provider.getUrlSchema().iterator();
-        while (schemes.hasNext()) {
-
-            validated = url.matches(schemes.next());
-
+        for (String s : provider.getUrlSchema()) {
+            validated = url.matches(s);
+            if (validated) {
+                break;
+            }
         }
         return validated;
     }
