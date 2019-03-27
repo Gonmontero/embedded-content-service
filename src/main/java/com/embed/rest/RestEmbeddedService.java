@@ -42,7 +42,7 @@ public class RestEmbeddedService extends ApplicationExceptionHandler {
             throw new ApplicationException(ErrorCode.FIELD_VALIDATION_ERROR, "An Url needs to be provided");
         }
 
-        EmbeddedContent response = embeddedService.getResponse(id, url);
+        EmbeddedContent response = embeddedService.getResponse(id.toLowerCase(), url);
 
         if (response != null) {
             httpResponse.setStatus(HttpServletResponse.SC_OK);

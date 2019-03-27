@@ -4,6 +4,7 @@ import com.embed.dao.ProviderDAO;
 import com.embed.entities.Provider;
 import com.embed.exceptions.ApplicationException;
 import com.embed.exceptions.errors.ErrorCode;
+import com.embed.rest.resources.request.RegisterProviderRequestResource;
 import com.embed.service.Impl.ProviderServiceImpl;
 import org.easymock.EasyMock;
 import org.easymock.EasyMockRunner;
@@ -14,7 +15,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @RunWith(EasyMockRunner.class)
@@ -34,7 +37,7 @@ public class ProviderServiceTest extends EasyMockSupport {
 
     @Test
     public void getProviderByNameSuccessTest() {
-        Provider provider = retrieveTestProvider();
+        Provider provider = retrieveTestProviderWithName("test");
 
         EasyMock.expect(providerDAO.findByName(provider.getName().toLowerCase())).andReturn(provider);
         EasyMock.replay(providerDAO);
@@ -50,7 +53,7 @@ public class ProviderServiceTest extends EasyMockSupport {
 
     @Test
     public void getProviderByNameErrorTest() {
-        Provider provider = retrieveTestProvider();
+        Provider provider = retrieveTestProviderWithName("test");
 
         EasyMock.expect(providerDAO.findByName(provider.getName().toLowerCase())).andReturn(null);
         EasyMock.replay(providerDAO);
@@ -65,14 +68,75 @@ public class ProviderServiceTest extends EasyMockSupport {
 
     }
 
-    private Provider retrieveTestProvider() {
+    @Test
+    public void getProvidersListTest() {
+        List<Provider> providers = new ArrayList<>();
 
-        String providerName = "TestProvider";
+        for (int t = 0; t < 3 ; t++ ) {
+            providers.add(retrieveTestProviderWithName("test" + t));
+        }
+        EasyMock.expect(providerDAO.findAll()).andReturn(providers);
+        EasyMock.replay(providerDAO);
+
+        Set<Provider> expectedProvider = providerService.retrieveProviders();
+
+        Assert.assertNotNull(expectedProvider);
+        expectedProvider.stream().map(providers::contains).forEach(Assert::assertTrue);
+
+        EasyMock.verify(providerDAO);
+
+    }
+
+    @Test
+    public void registerNewProviderSuccessTest() {
+
+        Provider provider= retrieveTestProviderWithName("test");
+        RegisterProviderRequestResource resource = new RegisterProviderRequestResource();
+        resource.setProviderName(provider.getName());
+        resource.setApiEndpoint(provider.getApiEndpoint());
+        List<String> schemeTest= new ArrayList<String>();
+        schemeTest.add("test");
+        resource.setUrlSchemes(schemeTest);
+
+        EasyMock.expect(providerDAO.save(EasyMock.anyObject())).andReturn(provider);
+        EasyMock.replay(providerDAO);
+
+        Provider expectedProvider = providerService.registerProvider(resource);
+
+        Assert.assertNotNull(expectedProvider);
+
+        EasyMock.verify(providerDAO);
+    }
+
+    @Test
+    public void registerNewProviderSuccessFail() throws Exception {
+
+        Provider provider= retrieveTestProviderWithName("test");
+        RegisterProviderRequestResource resource = new RegisterProviderRequestResource();
+        resource.setProviderName(provider.getName());
+        resource.setApiEndpoint(provider.getApiEndpoint());
+        List<String> schemeTest= new ArrayList<String>();
+        schemeTest.add("test");
+        resource.setUrlSchemes(schemeTest);
+
+        EasyMock.expect(providerDAO.save(EasyMock.anyObject())).andReturn(null);
+        EasyMock.replay(providerDAO);
+
+        Provider expectedProvider = providerService.registerProvider(resource);
+
+        Assert.assertNull(expectedProvider);
+
+        EasyMock.verify(providerDAO);
+    }
+
+        private Provider retrieveTestProviderWithName(String name) {
+
+        String providerName = name;
         Provider provider = new Provider();
         provider.setName(providerName);
-        provider.setApiEndpoint("www.testAPI.com");
+        provider.setApiEndpoint(name + ".com");
         Set<String> schemeTest = new HashSet<>();
-        schemeTest.add("test");
+        schemeTest.add(name);
         provider.setUrlSchema(schemeTest);
 
         return provider;

@@ -3,6 +3,8 @@ package com.embed.service;
 import com.embed.entities.Provider;
 import com.embed.rest.resources.request.RegisterProviderRequestResource;
 
+import java.util.Set;
+
 public interface ProviderService {
 
     /**
@@ -20,5 +22,12 @@ public interface ProviderService {
      * @return a Provider.
      */
     Provider registerProvider(RegisterProviderRequestResource resource);
+
+    /**
+     * Retrieves a list of all the registered providers.
+     *
+     * @return a list of Providers.
+     */
+    Set<Provider> retrieveProviders();
 
 }

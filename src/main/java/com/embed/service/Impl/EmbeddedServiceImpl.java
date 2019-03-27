@@ -33,7 +33,7 @@ public class EmbeddedServiceImpl implements EmbeddedService {
 
         if (!UrlProviderUtil.isRegisteredUrl(provider, url)) {
             throw new ApplicationException(ErrorCode.FIELD_VALIDATION_ERROR,
-                    "The Url is not registered to the provider " + providerName);
+                    "The Url provided is not valid to retrieve content from " + providerName);
         }
 
         embeddedContent.setProvider(provider);

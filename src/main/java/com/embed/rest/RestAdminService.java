@@ -1,7 +1,6 @@
 package com.embed.rest;
 
 import com.embed.entities.Provider;
-import com.embed.exceptions.ApplicationException;
 import com.embed.rest.exception.ApplicationExceptionHandler;
 import com.embed.rest.resources.request.RegisterProviderRequestResource;
 import com.embed.rest.resources.response.ProviderResponseResource;
@@ -12,12 +11,11 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashSet;
+import java.util.Set;
 
 
 @Api(tags = { "Admin" } )
@@ -51,6 +49,20 @@ public class RestAdminService extends ApplicationExceptionHandler {
         return response;
     }
 
+    @ApiOperation(value = "Retrieves a list of all registered providers")
+    @RequestMapping(value = "/providers", method = RequestMethod.GET)
+    public Set<ProviderResponseResource> listProvidersInformation(HttpServletResponse httpResponse) {
+
+        Set<Provider> providers = providerService.retrieveProviders();
+        Set<ProviderResponseResource> response = new HashSet<>();
+
+        if (providers != null) {
+            providers.forEach(p -> response.add(mapper.map(p, ProviderResponseResource.class)));
+            httpResponse.setStatus(HttpServletResponse.SC_OK);
+        }
+
+        return response;
+    }
 
     @ApiOperation(value = "Register information of a new provider")
     @RequestMapping(value = "/providers", method = RequestMethod.POST)

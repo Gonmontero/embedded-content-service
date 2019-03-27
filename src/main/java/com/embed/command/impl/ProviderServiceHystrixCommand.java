@@ -29,7 +29,7 @@ public class ProviderServiceHystrixCommand extends HystrixCommand<ProviderEmbedd
             ProviderEmbeddedResponse httpRequest = providerService.getEmbeddedContent(url);
             return httpRequest;
             } catch(RetrofitError e) {
-                LOGGER.error("ERROR when calling trying to reach url: " + url + "Error Message: " + e.getBody());
+                LOGGER.error("ERROR when calling trying to reach url: " + e.getUrl() + " Reason: " + e.getResponse().getReason() + e);
                 throw new ApplicationException(ErrorCode.UNEXPECTED_ERROR, "Failed to retrieve embedded content from Provider.");
         }
     }
