@@ -6,7 +6,7 @@
 
     <groupId>com.embed.service</groupId>
     <artifactId>embedded-content-service</artifactId>
-    <version>1.3.0</version>
+    <version>1.4.0</version>
     <name>EmbedService</name>
     <build>
         <finalName>embedded-content-service</finalName>

@@ -7,7 +7,7 @@ import com.embed.command.resources.ProviderEmbeddedResponse;
 import com.netflix.hystrix.exception.HystrixRuntimeException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.cache.annotation.Cacheable;
+
 
 public class ProviderServiceCommandFactory extends CommandFactoryBase<ProviderService> {
 

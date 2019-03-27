@@ -15,7 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -59,6 +61,19 @@ public class ProviderServiceImpl implements ProviderService {
             throw new ApplicationException(ErrorCode.FIELD_VALIDATION_ERROR, "The provider has already been registered");
         }
         return provider;
+    }
+
+    @Override
+    public Set<Provider> retrieveProviders() {
+
+        List<Provider> providers = providerDAO.findAll();
+
+        if (CollectionUtils.isEmpty(providers)) {
+            logger.info("The list of providers is empty");
+        }
+
+        return new HashSet<>(providers);
+
     }
 
     private void populateProviderDetails(RegisterProviderRequestResource resource, Provider provider) {
