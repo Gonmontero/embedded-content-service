@@ -57,8 +57,8 @@ public class ProviderServiceImpl implements ProviderService {
         try {
             provider = providerDAO.save(provider);
 
-        } catch (DataIntegrityViolationException dive) {
-            throw new ApplicationException(ErrorCode.FIELD_VALIDATION_ERROR, "The provider has already been registered");
+        } catch (Exception e) {
+            throw new ApplicationException(ErrorCode.UNEXPECTED_ERROR, "There has been a problem when trying to register the provider");
         }
         return provider;
     }
@@ -90,6 +90,11 @@ public class ProviderServiceImpl implements ProviderService {
     }
 
     private void validateProviderInformation(RegisterProviderRequestResource resource) {
+
+        if (providerDAO.findByName(resource.getProviderName()) != null) {
+            throw new ApplicationException(ErrorCode.FIELD_VALIDATION_ERROR, "The provider has already been registered");
+        }
+
         if (CollectionUtils.isEmpty(resource.getUrlSchemes())) {
             throw new ApplicationException(ErrorCode.FIELD_VALIDATION_ERROR, "The Url Scheme cannot be empty");
         }
