@@ -13,6 +13,7 @@ import org.easymock.Mock;
 import org.easymock.TestSubject;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
@@ -98,6 +99,7 @@ public class ProviderServiceTest extends EasyMockSupport {
         schemeTest.add("test");
         resource.setUrlSchemes(schemeTest);
 
+        EasyMock.expect(providerDAO.findByName(EasyMock.anyObject())).andReturn(null);
         EasyMock.expect(providerDAO.save(EasyMock.anyObject())).andReturn(provider);
         EasyMock.replay(providerDAO);
 
@@ -108,7 +110,7 @@ public class ProviderServiceTest extends EasyMockSupport {
         EasyMock.verify(providerDAO);
     }
 
-    @Test
+    @Test(expected = ApplicationException.class)
     public void registerNewProviderSuccessFail() throws Exception {
 
         Provider provider= retrieveTestProviderWithName("test");
@@ -119,7 +121,7 @@ public class ProviderServiceTest extends EasyMockSupport {
         schemeTest.add("test");
         resource.setUrlSchemes(schemeTest);
 
-        EasyMock.expect(providerDAO.save(EasyMock.anyObject())).andReturn(null);
+        EasyMock.expect(providerDAO.findByName(EasyMock.anyObject())).andReturn(provider);
         EasyMock.replay(providerDAO);
 
         Provider expectedProvider = providerService.registerProvider(resource);
